@@ -2,6 +2,7 @@
   {
     "src": "images/R1-06622-027A.jpg",
     "alt": "PALERMO, SICILY",
+    "tags": "city",
     "description": [
       "Shoot in Palermo in Sicily with a Canon AE-1 using Kodak 200 Gold.",
       "1. July 2023"
@@ -10,6 +11,7 @@
   {
     "src": "images/R2-07436-0008-Enhanced.jpg",
     "alt": "OSAKA, JAPAN",
+    "tags": "city mountain",
     "description": [
       "OSAKA, JAPAN - Mamiya RZ67",
       "Capturing the vibrant streets and serene temples."
@@ -18,6 +20,7 @@
   {
     "src": "images/R1-01451-0011.jpg",
     "alt": "TOKYO, JAPAN",
+    "tags": "city",
     "description": [
       "TOKYO, JAPAN - Mamiya RZ67",
       "A journey through the iconic Shibuya Crossing and beyond."
@@ -26,6 +29,7 @@
   {
     "src": "images/R1-06117-036A.jpg",
     "alt": "YUEN JING",
+    "tags": "mountain",
     "description": [
       "YUEN JING - Canon AE-1",
       "The tranquil beauty of traditional Chinese gardens."
@@ -34,6 +38,7 @@
   {
     "src": "images/R2-01477-025A.jpg",
     "alt": "R2-01477-025A",
+    "tags": "face",
     "description": [
       "Description for R2-01477-025A"
     ]
@@ -41,6 +46,7 @@
   {
     "src": "images/R1-02598-0014.jpg",
     "alt": "R1-02598-0014",
+    "tags": "mountain",
     "description": [
       "Description for R1-02598-0014"
     ]
@@ -48,6 +54,7 @@
   {
     "src": "images/R1-01451-0007.jpg",
     "alt": "R1-01451-0007",
+    "tags": "face",
     "description": [
       "Description for R1-01451-0007"
     ]
@@ -55,6 +62,7 @@
   {
     "src": "images/R1-02018-035A.jpg",
     "alt": "R1-02018-035A",
+    "tags": "city",
     "description": [
       "Description for R1-02018-035A"
     ]
@@ -62,6 +70,7 @@
   {
     "src": "images/R1-01451-0006.jpg",
     "alt": "R1-01451-0006",
+    "tags": "face mountain",
     "description": [
       "Description for R1-01451-0006"
     ]
@@ -69,6 +78,7 @@
   {
     "src": "images/R1-05843-0032.jpg",
     "alt": "R1-05843-0032",
+    "tags": "mountain",
     "description": [
       "Description for R1-05843-0032"
     ]
@@ -76,6 +86,7 @@
   {
     "src": "images/R1-02598-0011.jpg",
     "alt": "R1-02598-0011",
+    "tags": "city",
     "description": [
       "Description for R1-02598-0011"
     ]
@@ -83,6 +94,7 @@
   {
     "src": "images/R1-01451-0016.jpg",
     "alt": "R1-01451-0016",
+    "tags": "face",
     "description": [
       "Description for R1-01451-0016"
     ]
@@ -90,6 +102,7 @@
   {
     "src": "images/R1-02018-022A.jpg",
     "alt": "R1-02018-022A",
+    "tags": "mountain city",
     "description": [
       "Description for R1-02018-022A"
     ]
@@ -97,6 +110,7 @@
   {
     "src": "images/R1-02598-0010.jpg",
     "alt": "R1-02598-0010",
+    "tags": "face mountain",
     "description": [
       "Description for R1-02598-0010"
     ]
@@ -104,6 +118,7 @@
   {
     "src": "images/R2-01476-024A.jpg",
     "alt": "R2-01476-024A",
+    "tags": "face",
     "description": [
       "Description for R2-01476-024A"
     ]
@@ -111,6 +126,7 @@
   {
     "src": "images/TEST1_PANORAMA-Edit-Edit.jpg",
     "alt": "TEST1_PANORAMA-Edit-Edit",
+    "tags": "mountain",
     "description": [
       "Description for TEST1_PANORAMA-Edit-Edit"
     ]
@@ -118,6 +134,7 @@
   {
     "src": "images/R1-01451-0000.jpg",
     "alt": "R1-01451-0000",
+    "tags": "face",
     "description": [
       "Description for R1-01451-0000"
     ]
@@ -125,6 +142,7 @@
   {
     "src": "images/R1-02598-0007.jpg",
     "alt": "R1-02598-0007",
+    "tags": "city",
     "description": [
       "Description for R1-02598-0007"
     ]
@@ -132,6 +150,7 @@
   {
     "src": "images/R2-07436-0005.jpg",
     "alt": "R2-07436-0005",
+    "tags": "face mountain",
     "description": [
       "Description for R2-07436-0005"
     ]
@@ -139,6 +158,7 @@
   {
     "src": "images/R1-00042-008A.jpg",
     "alt": "R1-00042-008A",
+    "tags": "city",
     "description": [
       "Description for R1-00042-008A"
     ]
@@ -146,6 +166,7 @@
   {
     "src": "images/R2-07436-0004.jpg",
     "alt": "R2-07436-0004",
+    "tags": "mountain",
     "description": [
       "Description for R2-07436-0004"
     ]

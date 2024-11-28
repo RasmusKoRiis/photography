@@ -235,3 +235,20 @@ body {
 .grid-button:active {
     color: #333; /* Darker color when clicked */
 }
+
+/* Emoji Filters Sidebar */
+#emoji-filters {
+    position: fixed;
+    top: 20px;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .emoji-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }

@@ -241,5 +241,34 @@ const updateGridColumns = () => {
     document.querySelector('.photo-grid').style.gridTemplateColumns = `repeat(${gridColumns}, 1fr)`;
 };
 
+
+// Select all filter buttons and grid items
+const emojiButtons = document.querySelectorAll(".emoji-button");
+const photoItems = document.querySelectorAll(".photo-item");
+
+// Add event listeners to each emoji button
+emojiButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    const filterTag = button.dataset.tag; // Get the tag from the button
+
+    if (filterTag === "all") {
+      // Show all photos when "clear all" is clicked
+      photoItems.forEach(item => {
+        item.style.display = "block";
+      });
+    } else {
+      // Filter photos based on the selected tag
+      photoItems.forEach(item => {
+        const tags = item.dataset.tags.split(" "); // Get tags for each photo
+        if (tags.includes(filterTag)) {
+          item.style.display = "block"; // Show the photo
+        } else {
+          item.style.display = "none"; // Hide the photo
+        }
+      });
+    }
+  });
+});
+
 // Fetch photos and initialize the grid
 fetchPhotos();
