@@ -1,6 +1,7 @@
 let photosData = []; // Global array to store photo data from JSON
 const body = document.body;
 const photoGrid = document.querySelector('.photo-grid');
+let lastViewedIndex = 0; // Store the index of the last viewed photo
 
 // Lazy loading function
 const lazyLoad = (entries, observer) => {
@@ -21,7 +22,7 @@ const lazyLoad = (entries, observer) => {
 const lazyObserver = new IntersectionObserver(lazyLoad, {
     root: null,
     rootMargin: "100px",
-    threshold: 0.1
+    threshold: 0.1,
 });
 
 // Fetch photos from JSON
@@ -46,7 +47,9 @@ const initializeGrid = () => {
 const fillGrid = () => {
     const fragment = document.createDocumentFragment();
 
-    photosData.forEach((photo) => {
+    photosData.forEach((photo, index) => {
+        if (!photo.src) return; // Skip if photo data is incomplete
+
         // Create photo container
         const container = document.createElement('div');
         container.classList.add('photo-container');
@@ -56,6 +59,11 @@ const fillGrid = () => {
         img.setAttribute('data-src', photo.src); // Lazy-load the image
         img.alt = photo.alt;
         img.classList.add('photo');
+        img.addEventListener('error', () => {
+            console.error(`Failed to load image: ${photo.src}`);
+            container.remove(); // Remove the container if image fails to load
+        });
+
         lazyObserver.observe(img); // Observe for lazy loading
 
         // Create hover overlay
@@ -80,9 +88,6 @@ const rebindPhotoClickEvents = () => {
         photo.addEventListener('click', () => createFullscreenView(index % photosData.length));
     });
 };
-
-// Fullscreen view with I and A buttons and updated info overlay
-let lastViewedIndex = 0; // Store the index of the last viewed photo
 
 // Fullscreen view with I and A buttons and updated info overlay
 const createFullscreenView = (startIndex) => {
@@ -123,30 +128,25 @@ const createFullscreenView = (startIndex) => {
         const infoOverlay = document.createElement('div');
         infoOverlay.classList.add('info-overlay');
 
-        // Create the title
         const title = document.createElement('h3');
         title.classList.add('info-title');
         title.innerText = photo.alt; // Use the photo's alt text as the title
         infoOverlay.appendChild(title);
 
-        // Check if the description is an array
         if (Array.isArray(photo.description)) {
-            // Render each description item as a separate paragraph
             photo.description.forEach((paragraph) => {
                 const descriptionParagraph = document.createElement('p');
                 descriptionParagraph.classList.add('info-description');
-                descriptionParagraph.innerText = paragraph; // Add the text content
+                descriptionParagraph.innerText = paragraph;
                 infoOverlay.appendChild(descriptionParagraph);
             });
         } else {
-            // Render a single description string if it's not an array
             const description = document.createElement('p');
             description.classList.add('info-description');
             description.innerText = photo.description || "No additional information available.";
             infoOverlay.appendChild(description);
         }
 
-        // Add event listener for click to close the info overlay
         infoOverlay.addEventListener('click', (e) => {
             e.stopPropagation();
             infoOverlay.classList.remove('visible');
