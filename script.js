@@ -123,16 +123,30 @@ const createFullscreenView = (startIndex) => {
         const infoOverlay = document.createElement('div');
         infoOverlay.classList.add('info-overlay');
 
+        // Create the title
         const title = document.createElement('h3');
         title.classList.add('info-title');
         title.innerText = photo.alt; // Use the photo's alt text as the title
-
-        const description = document.createElement('p');
-        description.classList.add('info-description');
-        description.innerText = photo.description || "No additional information available.";
-
         infoOverlay.appendChild(title);
-        infoOverlay.appendChild(description);
+
+        // Check if the description is an array
+        if (Array.isArray(photo.description)) {
+            // Render each description item as a separate paragraph
+            photo.description.forEach((paragraph) => {
+                const descriptionParagraph = document.createElement('p');
+                descriptionParagraph.classList.add('info-description');
+                descriptionParagraph.innerText = paragraph; // Add the text content
+                infoOverlay.appendChild(descriptionParagraph);
+            });
+        } else {
+            // Render a single description string if it's not an array
+            const description = document.createElement('p');
+            description.classList.add('info-description');
+            description.innerText = photo.description || "No additional information available.";
+            infoOverlay.appendChild(description);
+        }
+
+        // Add event listener for click to close the info overlay
         infoOverlay.addEventListener('click', (e) => {
             e.stopPropagation();
             infoOverlay.classList.remove('visible');
