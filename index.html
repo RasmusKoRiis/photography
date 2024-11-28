@@ -3,37 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Emoji Photo Filter</title>
+  <title>Photography Portfolio</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Emoji Filters -->
-  <div id="emoji-filters">
-    <button class="emoji-button" data-tag="mountain">🗻</button>
-    <button class="emoji-button" data-tag="face">🧝‍♀️</button>
-    <button class="emoji-button" data-tag="city">🌆</button>
-    <button class="emoji-button" data-tag="all">❌</button>
-  </div>
-
-  <!-- Photo Grid -->
   <div class="photo-grid">
-    <div class="photo-item" data-tags="mountain">
-      <img src="mountain.jpg" alt="Mountain">
+    <div class="grid-controls">
+      <button id="increase-grid" class="grid-button">+</button>
+      <button id="decrease-grid" class="grid-button">-</button>
     </div>
-    <div class="photo-item" data-tags="face">
-      <img src="face.jpg" alt="Face">
+    <div class="name-overlay">
+      <a href="mailto:rasmuskoriis@gmail.com" class="name-link">RASMUS KOPPERUD RIIS</a>
     </div>
-    <div class="photo-item" data-tags="city">
-      <img src="city.jpg" alt="City">
-    </div>
-    <div class="photo-item" data-tags="mountain city">
-      <img src="mountain-city.jpg" alt="Mountain and City">
-    </div>
-    <div class="photo-item" data-tags="face mountain">
-      <img src="face-mountain.jpg" alt="Face and Mountain">
-    </div>
+    <!-- Photos will be dynamically loaded here -->
   </div>
-
+    <!-- Photos will be dynamically loaded here -->
+  </div>
   <script src="script.js"></script>
 </body>
 </html>
