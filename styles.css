@@ -1,0 +1,237 @@
+/* General styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    overflow-y: scroll; /* Enable vertical scrolling */
+}
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Always 3 columns */
+    gap: 5px; /* Minimal gap between photos */
+    padding: 5px;
+    width: calc(100% - 20px); /* Adjust width to account for the border */
+    height: auto; /* Let the grid expand vertically */
+    margin: 10px auto; /* Center the grid and add space for the border */
+    border: 10px solid #fff; /* Add a 10px black border */
+    box-sizing: border-box; /* Include padding and border in the element's size */
+}
+
+.name-overlay {
+    position: fixed; /* Fixed positioning so it follows the scroll */
+    left: 20px; /* Inside the left border */
+    bottom: 10%; /* Center it vertically */
+    transform: rotate(-90deg); /* Rotate the text horizontally along the vertical border */
+    transform-origin: left bottom; /* Ensure rotation origin aligns with the border */
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+    z-index: 30; /* Ensure it appears above the grid */
+    pointer-events: none; /* Prevent interaction with the text */
+    pointer-events: auto; /* Allows clicks */
+}
+
+.photo {
+    width: 100%;
+    aspect-ratio: 1; /* Maintain square aspect ratio */
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.photo:hover {
+    transform: scale(1.02); /* Slight zoom effect on hover */
+}
+
+/* Fullscreen view */
+.fullscreen-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    height: 100vh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    position: relative;
+}
+
+.fullscreen-img {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    scroll-snap-align: start;
+    position: relative;
+    z-index: 1;
+}
+
+/* Info and aspect ratio icons */
+.info-icon, .aspect-icon {
+    position: absolute;
+    top: 10px;
+    width: 30px;
+    height: 30px;
+    background-color: rgba(128, 128, 128, 0.8); /* Grey with 80% opacity */
+    color: white;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: background-color 0.3s ease;
+}
+
+.info-icon {
+    right: 50px;
+}
+
+.aspect-icon {
+    right: 10px;
+}
+
+.info-icon::after {
+    content: "i"; /* White "i" inside the circle */
+    font-family: Arial, sans-serif;
+}
+
+.aspect-icon::after {
+    content: "A"; /* White "A" inside the circle */
+    font-family: Arial, sans-serif;
+}
+
+.info-icon:hover, .aspect-icon:hover {
+    background-color: rgba(100, 100, 100, 0.9); /* Slightly darker on hover */
+}
+
+/* Info overlay in bottom-left corner */
+/* Info overlay in upper-left corner */
+.info-overlay {
+    position: absolute;
+    top: 20px; /* Position it from the top */
+    left: 20px; /* Position it from the left */
+    background-color: rgba(0, 0, 0, 0.75); /* Increase opacity of the black background */
+    color: #fff; /* White text for contrast */
+    padding: 20px; /* Add padding for better spacing */
+    border-radius: 8px; /* Slightly rounded corners */
+    max-width: 300px; /* Prevent overlay from becoming too wide */
+    z-index: 3; /* Ensure it appears on top of other elements */
+    opacity: 0; /* Initially hidden */
+    pointer-events: none; /* Prevent interaction when hidden */
+    transition: opacity 0.3s ease; /* Smooth fade-in effect */
+}
+
+.info-overlay.visible {
+    opacity: 1; /* Show the overlay */
+    pointer-events: auto; /* Allow interaction */
+}
+
+/* Title in the info overlay */
+.info-title {
+    font-size: 20px; /* Larger font for the title */
+    font-weight: bold; /* Bold for emphasis */
+    margin: 0 0 10px 0; /* Add spacing below the title */
+}
+
+/* Description in the info overlay */
+.info-description {
+    font-size: 16px; /* Slightly smaller font for the description */
+    line-height: 1.6; /* Improve readability with better line spacing */
+    margin: 0; /* No extra margin */
+}
+
+/* Aspect ratio overlay */
+.aspect-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95); /* Nearly opaque grey background */
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    z-index: 4;
+}
+
+.aspect-overlay.visible {
+    display: flex;
+}
+
+.aspect-overlay img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain; /* Display photo in its original aspect ratio */
+}
+
+
+/* Ensure photo-container does not block pointer events */
+.photo-container {
+    position: relative;
+    overflow: hidden; /* Ensure content doesn't spill out */
+    pointer-events: auto; /* Allow interaction with the container */
+}
+
+/* Photo hover overlay */
+.photo-hover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8); /* White with 80% opacity */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black; /* Text color */
+    font-size: 18px; /* Text size */
+    font-weight: bold; /* Text weight */
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease; /* Smooth fade-in effect */
+    pointer-events: none; /* Allow clicks to pass through */
+}
+
+.photo-container:hover .photo-hover-overlay {
+    opacity: 1; /* Show overlay on hover */
+}
+
+.name-link {
+    text-decoration: none; /* Removes underlines */
+    color: inherit; /* Inherits color from parent */
+    cursor: pointer; /* Displays pointer on hover */
+}
+
+.name-link:hover {
+    text-decoration: underline; /* Optional hover effect */
+}
+
+.grid-controls {
+    position: fixed;
+    top: 22px; /* Align to the top of the page */
+    left: 4px; /* Align to the left of the border */
+    z-index: 40; /* Ensure it's above other elements */
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 5px; /* Add spacing between the buttons */
+}
+
+.grid-button {
+    background: none; /* Remove the background color */
+    border: none; /* Remove the border */
+    color: #000; /* Black text */
+    font-size: 24px; /* Larger font for better visibility */
+    font-weight: bold; /* Make the symbols bold */
+    cursor: pointer; /* Show pointer cursor on hover */
+    line-height: 1; /* Prevent extra spacing */
+    padding: 0; /* Remove padding for a cleaner look */
+}
+
+.grid-button:hover {
+    color: #555; /* Slightly lighter color on hover */
+}
+
+.grid-button:active {
+    color: #333; /* Darker color when clicked */
+}
