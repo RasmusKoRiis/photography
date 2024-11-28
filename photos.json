@@ -1,6 +1,7 @@
 
 [
-  { "src": "images/R1-06622-027A.jpg", "alt": "PALERMO, SICILY", "description": "PALEgRMO, SICILY - Canon AE-1 dsjkl fdhuldksa hfediue euje jueiowej uegiuei" },
+  { "src": "images/R1-06622-027A.jpg", "alt": "PALERMO, SICILY", "description": ["Shoot in Palermo in Sicily with a Canon AE-1.",
+                                                                                "1. July 2023"] },
   { "src": "images/R2-07436-0008-Enhanced.jpg", "alt": "OSAKA, JAPAN", "description": "OSAKA, JAPAN - Mamiya RZ67" },
   { "src": "images/R1-01451-0011.jpg", "alt": "TOKYO, JAPAN", "description": "TOKYO, JAPAN - Mamiya RZ67" },
   { "src": "images/R1-06117-036A.jpg", "alt": "YUEN JING", "description": "YUEN JING - Canon AE-1" },
