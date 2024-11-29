@@ -241,6 +241,28 @@ const updateGridColumns = () => {
     document.querySelector('.photo-grid').style.gridTemplateColumns = `repeat(${gridColumns}, 1fr)`;
 };
 
+// Shuffle function
+const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+};
+
+// Shuffle the grid when the button is clicked
+document.getElementById('shuffle-grid').addEventListener('click', () => {
+    // Shuffle the photosData array
+    photosData = shuffleArray(photosData);
+
+    // Clear the existing grid
+    photoGrid.innerHTML = '';
+
+    // Refill the grid with shuffled photos
+    fillGrid();
+    rebindPhotoClickEvents();
+});
+
 
 // Fetch photos and initialize the grid
 fetchPhotos();
