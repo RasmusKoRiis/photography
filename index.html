@@ -7,19 +7,23 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="photo-grid">
-    <div class="grid-controls">
-      <button id="increase-grid" class="grid-button">+</button>
-      <button id="decrease-grid" class="grid-button">-</button>
-      <button id="shuffle-grid" class="grid-button">s</button>
-    </div>
-    <div class="name-overlay">
-      <a href="mailto:rasmuskoriis@gmail.com" class="name-link">RASMUS KOPPERUD RIIS</a>
-    </div>
-    <div id="photo-container">
-      <!-- Photos will be dynamically loaded here -->
-    </div>
+  <!-- Controls for grid layout -->
+  <div class="grid-controls">
+    <button id="increase-grid" class="grid-button">+</button>
+    <button id="decrease-grid" class="grid-button">-</button>
+    <button id="shuffle-grid" class="grid-button">s</button>
   </div>
+
+  <!-- Grid for photos -->
+  <div class="photo-grid">
+    <!-- Dynamically loaded photos will go here -->
+  </div>
+
+  <!-- Name overlay (outside grid but still visible) -->
+  <div class="name-overlay">
+    <a href="mailto:rasmuskoriis@gmail.com" class="name-link">RASMUS KOPPERUD RIIS</a>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>

@@ -45,15 +45,14 @@ const initializeGrid = () => {
 
 // Fill the grid with photos
 const fillGrid = () => {
-    const photoContainer = document.getElementById('photo-container');
     const fragment = document.createDocumentFragment();
 
-    photosData.forEach((photo) => {
+    photosData.forEach((photo, index) => {
         if (!photo.src) return; // Skip if photo data is incomplete
 
-        // Create photo wrapper
+        // Create photo container
         const container = document.createElement('div');
-        container.classList.add('photo-wrapper');
+        container.classList.add('photo-container');
 
         // Create the photo element
         const img = document.createElement('img');
@@ -78,9 +77,8 @@ const fillGrid = () => {
         fragment.appendChild(container);
     });
 
-    // Append the fragment to the photo container
-    photoContainer.innerHTML = ''; // Clear any existing photos
-    photoContainer.appendChild(fragment);
+    // Append the fragment to the photo grid
+    photoGrid.appendChild(fragment);
 };
 
 // Rebind click events for all photos
@@ -195,7 +193,7 @@ const returnToGridPage = () => {
     observeScrollTrigger(); // Re-setup scroll trigger
 
     // Scroll to the last viewed photo
-    const gridPhotos = document.querySelectorAll('.photo-wrapper');
+    const gridPhotos = document.querySelectorAll('.photo-container');
     if (gridPhotos[lastViewedIndex]) {
         gridPhotos[lastViewedIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
@@ -219,39 +217,66 @@ const observeScrollTrigger = () => {
     scrollObserver.observe(trigger);
 };
 
+// Ensure the mailto link is clickable
+document.querySelector('.name-link').addEventListener('click', (e) => {
+    console.log('Name clicked!');
+});
+
 // Default grid columns
 let gridColumns = 3;
 
 // Add event listeners for the + and - buttons
 document.getElementById('increase-grid').addEventListener('click', () => {
-    gridColumns = Math.min(gridColumns + 1, 5); // Max 5 columns
+    gridColumns = 3; // Set to 3 columns
     updateGridColumns();
 });
 
 document.getElementById('decrease-grid').addEventListener('click', () => {
-    gridColumns = Math.max(gridColumns - 1, 1); // Min 1 column
+    gridColumns = 5; // Set to 5 columns
     updateGridColumns();
 });
 
 // Function to update the grid style dynamically
 const updateGridColumns = () => {
-    document.getElementById('photo-container').style.gridTemplateColumns = `repeat(${gridColumns}, 1fr)`;
+    document.querySelector('.photo-grid').style.gridTemplateColumns = `repeat(${gridColumns}, 1fr)`;
 };
 
-// Shuffle function
-const shuffleArray = (array) => {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
+// Preload images to ensure all are loaded before shuffling
+const preloadImages = () => {
+    document.querySelectorAll('.photo-container img').forEach(img => {
+        if (img.dataset.src) {
+            img.src = img.dataset.src; // Load the image
+            img.removeAttribute('data-src'); // Remove lazy-loading marker
+        }
+    });
 };
 
-// Shuffle the grid when the button is clicked
+const shuffleGrid = () => {
+    const photoGrid = document.querySelector('.photo-grid');
+    const photoContainers = Array.from(photoGrid.querySelectorAll('.photo-container'));
+
+    // Shuffle the array of photo containers
+    const shuffled = photoContainers.sort(() => Math.random() - 0.5);
+
+    // Clear and re-append photo containers in shuffled order with fixed indices
+    photoGrid.innerHTML = ""; // Clear the grid
+    shuffled.forEach(container => {
+        photoGrid.appendChild(container);
+    });
+};
+
+const forceGridReflow = () => {
+    const photoGrid = document.querySelector('.photo-grid');
+    photoGrid.style.display = 'none'; // Hide grid
+    requestAnimationFrame(() => {
+        photoGrid.style.display = 'grid'; // Redisplay grid
+    });
+};
+
+// Integrate with shuffle
 document.getElementById('shuffle-grid').addEventListener('click', () => {
-    photosData = shuffleArray(photosData); // Shuffle the data array
-    fillGrid(); // Refill the grid with shuffled photos
-    rebindPhotoClickEvents(); // Rebind functionality
+    shuffleGrid();
+    forceGridReflow();
 });
 
 // Fetch photos and initialize the grid
