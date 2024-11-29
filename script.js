@@ -38,6 +38,53 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    let loadedPhotoCount = 0; // Track how many photos are loaded
+    const maxPhotosPerBatch = 10; // Limit the number of photos loaded per scroll event
+    let maxPhotosToLoad = 150;
+
+    const loadMorePhotos = () => {
+        const fragment = document.createDocumentFragment();
+        const currentPhotoCount = document.querySelectorAll('.photo-container').length;
+    
+        for (let i = loadedPhotoCount; i < loadedPhotoCount + maxPhotosPerBatch; i++) {
+            if (i >= photosData.length || i >= maxPhotosToLoad) {
+                console.log("No more photos to load."); // Debugging log
+                const trigger = document.querySelector('.scroll-trigger');
+                if (trigger) trigger.remove(); // Remove the trigger when done
+                break;
+            }
+    
+            const photo = photosData[i];
+            const container = document.createElement('div');
+            container.classList.add('photo-container');
+    
+            const img = document.createElement('img');
+            img.setAttribute('data-src', photo.src); // Lazy-load the image
+            img.alt = photo.alt;
+            img.classList.add('photo');
+    
+            lazyObserver.observe(img); // Lazy load observer
+    
+            const overlay = document.createElement('div');
+            overlay.classList.add('photo-hover-overlay');
+            overlay.innerText = photo.alt;
+    
+            container.appendChild(img);
+            container.appendChild(overlay);
+            fragment.appendChild(container);
+        }
+    
+        loadedPhotoCount += maxPhotosPerBatch; // Update the count of loaded photos
+        photoGrid.appendChild(fragment); // Append photos to the grid
+    
+        // Remove trigger if maxPhotosToLoad has been reached
+        if (loadedPhotoCount >= maxPhotosToLoad) {
+            console.log(`Reached max photos limit (${maxPhotosToLoad}).`);
+            const trigger = document.querySelector('.scroll-trigger');
+            if (trigger) trigger.remove(); // Remove the scroll trigger
+        }
+    };
+
     // Initialize the grid for the first time
     const initializeGrid = () => {
         fillGrid(); // Fill the grid with the first batch of photos
@@ -189,24 +236,59 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedPhoto.scrollIntoView({ behavior: 'smooth', block: 'center' });
     };
 
-    // Return to the grid page function
     const returnToGridPage = () => {
         const fullscreenContainer = document.querySelector('.fullscreen-container');
         if (fullscreenContainer) fullscreenContainer.remove(); // Remove fullscreen container
-
-        document.querySelector('.photo-grid').style.display = 'grid'; // Show the grid
-        document.querySelector('.name-overlay').style.visibility = 'visible'; // Show name overlay
-
-        // Add this line to restore visibility of the controls
-        document.querySelector('.grid-controls').style.display = 'flex'; // Show the controls again
-
-        observeScrollTrigger(); // Re-setup scroll trigger
-
-        // Scroll to the last viewed photo
-        const gridPhotos = document.querySelectorAll('.photo-container');
-        if (gridPhotos[lastViewedIndex]) {
-            gridPhotos[lastViewedIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
+        const photoGrid = document.querySelector('.photo-grid');
+        if (!photoGrid) {
+            console.error("Photo grid element not found!");
+            return; // Abort if the photo grid is missing
         }
+    
+        // Restore visibility of controls and overlay
+        document.querySelector('.grid-controls').style.display = 'flex'; // Show grid controls
+        document.querySelector('.name-overlay').style.visibility = 'visible'; // Show name overlay
+    
+        // Ensure the photo grid is visible
+        photoGrid.style.display = 'grid';
+    
+        // Clear the grid and load a maximum of 12 photos
+        photoGrid.innerHTML = ""; // Clear the grid content
+        const fragment = document.createDocumentFragment();
+    
+        // Load up to 12 photos
+        const maxPhotosToShow = 12;
+        for (let i = 0; i < Math.min(maxPhotosToShow, photosData.length); i++) {
+            const photo = photosData[i];
+    
+            // Create photo container
+            const container = document.createElement('div');
+            container.classList.add('photo-container');
+    
+            // Create the photo element
+            const img = document.createElement('img');
+            img.setAttribute('src', photo.src); // Load the image immediately
+            img.alt = photo.alt;
+            img.classList.add('photo');
+    
+            const overlay = document.createElement('div');
+            overlay.classList.add('photo-hover-overlay');
+            overlay.innerText = photo.alt;
+    
+            container.appendChild(img);
+            container.appendChild(overlay);
+            fragment.appendChild(container);
+        }
+    
+        // Append the fragment to the photo grid
+        photoGrid.appendChild(fragment);
+    
+        // Rebind click events for fullscreen
+        rebindPhotoClickEvents();
+    
+        // Reinitialize the scroll trigger
+        observeScrollTrigger();
     };
 
     // Infinite scrolling: Observe when to load more photos
