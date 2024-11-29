@@ -255,11 +255,49 @@ document.getElementById('shuffle-grid').addEventListener('click', () => {
     // Shuffle the photosData array
     photosData = shuffleArray(photosData);
 
-    // Clear the existing grid
-    photoGrid.innerHTML = '';
+    // Get the photo container
+    const photoContainer = document.getElementById('photo-container');
 
-    // Refill the grid with shuffled photos
-    fillGrid();
+    // Clear only the photo container
+    photoContainer.innerHTML = '';
+
+    // Refill the photo container with shuffled photos
+    const fragment = document.createDocumentFragment();
+
+    photosData.forEach((photo) => {
+        if (!photo.src) return; // Skip if photo data is incomplete
+
+        // Create photo container
+        const container = document.createElement('div');
+        container.classList.add('photo-container');
+
+        // Create the photo element
+        const img = document.createElement('img');
+        img.setAttribute('data-src', photo.src); // Lazy-load the image
+        img.alt = photo.alt;
+        img.classList.add('photo');
+        img.addEventListener('error', () => {
+            console.error(`Failed to load image: ${photo.src}`);
+            container.remove(); // Remove the container if image fails to load
+        });
+
+        lazyObserver.observe(img); // Observe for lazy loading
+
+        // Create hover overlay
+        const overlay = document.createElement('div');
+        overlay.classList.add('photo-hover-overlay');
+        overlay.innerText = photo.alt; // Use the alt text as overlay text
+
+        // Append photo and overlay to the container
+        container.appendChild(img);
+        container.appendChild(overlay);
+        fragment.appendChild(container);
+    });
+
+    // Append the fragment to the photo container
+    photoContainer.appendChild(fragment);
+
+    // Rebind photo click events for the new grid
     rebindPhotoClickEvents();
 });
 
