@@ -45,14 +45,15 @@ const initializeGrid = () => {
 
 // Fill the grid with photos
 const fillGrid = () => {
+    const photoContainer = document.getElementById('photo-container');
     const fragment = document.createDocumentFragment();
 
-    photosData.forEach((photo, index) => {
+    photosData.forEach((photo) => {
         if (!photo.src) return; // Skip if photo data is incomplete
 
-        // Create photo container
+        // Create photo wrapper
         const container = document.createElement('div');
-        container.classList.add('photo-container');
+        container.classList.add('photo-wrapper');
 
         // Create the photo element
         const img = document.createElement('img');
@@ -77,8 +78,9 @@ const fillGrid = () => {
         fragment.appendChild(container);
     });
 
-    // Append the fragment to the photo grid
-    photoGrid.appendChild(fragment);
+    // Append the fragment to the photo container
+    photoContainer.innerHTML = ''; // Clear any existing photos
+    photoContainer.appendChild(fragment);
 };
 
 // Rebind click events for all photos
@@ -193,7 +195,7 @@ const returnToGridPage = () => {
     observeScrollTrigger(); // Re-setup scroll trigger
 
     // Scroll to the last viewed photo
-    const gridPhotos = document.querySelectorAll('.photo-container');
+    const gridPhotos = document.querySelectorAll('.photo-wrapper');
     if (gridPhotos[lastViewedIndex]) {
         gridPhotos[lastViewedIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
@@ -217,28 +219,23 @@ const observeScrollTrigger = () => {
     scrollObserver.observe(trigger);
 };
 
-// Ensure the mailto link is clickable
-document.querySelector('.name-link').addEventListener('click', (e) => {
-    console.log('Name clicked!');
-});
-
 // Default grid columns
 let gridColumns = 3;
 
 // Add event listeners for the + and - buttons
 document.getElementById('increase-grid').addEventListener('click', () => {
-    gridColumns = 3; // Set to 3 columns
+    gridColumns = Math.min(gridColumns + 1, 5); // Max 5 columns
     updateGridColumns();
 });
 
 document.getElementById('decrease-grid').addEventListener('click', () => {
-    gridColumns = 5; // Set to 5 columns
+    gridColumns = Math.max(gridColumns - 1, 1); // Min 1 column
     updateGridColumns();
 });
 
 // Function to update the grid style dynamically
 const updateGridColumns = () => {
-    document.querySelector('.photo-grid').style.gridTemplateColumns = `repeat(${gridColumns}, 1fr)`;
+    document.getElementById('photo-container').style.gridTemplateColumns = `repeat(${gridColumns}, 1fr)`;
 };
 
 // Shuffle function
@@ -252,55 +249,10 @@ const shuffleArray = (array) => {
 
 // Shuffle the grid when the button is clicked
 document.getElementById('shuffle-grid').addEventListener('click', () => {
-    // Shuffle the photosData array
-    photosData = shuffleArray(photosData);
-
-    // Get the photo container
-    const photoContainer = document.getElementById('photo-container');
-
-    // Clear only the photo container
-    photoContainer.innerHTML = '';
-
-    // Refill the photo container with shuffled photos
-    const fragment = document.createDocumentFragment();
-
-    photosData.forEach((photo) => {
-        if (!photo.src) return; // Skip if photo data is incomplete
-
-        // Create photo container
-        const container = document.createElement('div');
-        container.classList.add('photo-container');
-
-        // Create the photo element
-        const img = document.createElement('img');
-        img.setAttribute('data-src', photo.src); // Lazy-load the image
-        img.alt = photo.alt;
-        img.classList.add('photo');
-        img.addEventListener('error', () => {
-            console.error(`Failed to load image: ${photo.src}`);
-            container.remove(); // Remove the container if image fails to load
-        });
-
-        lazyObserver.observe(img); // Observe for lazy loading
-
-        // Create hover overlay
-        const overlay = document.createElement('div');
-        overlay.classList.add('photo-hover-overlay');
-        overlay.innerText = photo.alt; // Use the alt text as overlay text
-
-        // Append photo and overlay to the container
-        container.appendChild(img);
-        container.appendChild(overlay);
-        fragment.appendChild(container);
-    });
-
-    // Append the fragment to the photo container
-    photoContainer.appendChild(fragment);
-
-    // Rebind photo click events for the new grid
-    rebindPhotoClickEvents();
+    photosData = shuffleArray(photosData); // Shuffle the data array
+    fillGrid(); // Refill the grid with shuffled photos
+    rebindPhotoClickEvents(); // Rebind functionality
 });
-
 
 // Fetch photos and initialize the grid
 fetchPhotos();

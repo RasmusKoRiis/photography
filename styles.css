@@ -235,3 +235,16 @@ body {
 .grid-button:active {
     color: #333; /* Darker color when clicked */
 }
+
+/* Ensure photo container takes up available space in the grid */
+#photo-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Default to 3 columns */
+    gap: 5px; /* Adjust gap between photos */
+    width: 100%; /* Match grid width */
+  }
+  
+  /* Adjust when grid is resized */
+  .photo-grid {
+    position: relative; /* Ensure proper alignment of child elements */
+  }
