@@ -180,8 +180,10 @@ document.addEventListener('DOMContentLoaded', () => {
             container.appendChild(imgContainer);
         });
 
-        body.innerHTML = ''; // Clear existing content
-        body.appendChild(container); // Append fullscreen container
+        document.querySelector('.photo-grid').style.display = 'none'; // Hide the grid
+        document.querySelector('.grid-controls').style.display = 'none'; // Hide controls
+        document.querySelector('.name-overlay').style.visibility = 'hidden'; // Hide name overlay
+        document.body.appendChild(container); // Append fullscreen container
 
         const selectedPhoto = container.children[startIndex];
         selectedPhoto.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -189,8 +191,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Return to the grid page function
     const returnToGridPage = () => {
-        body.innerHTML = ''; // Clear fullscreen content
-        body.appendChild(photoGrid); // Restore the grid
+        const fullscreenContainer = document.querySelector('.fullscreen-container');
+        if (fullscreenContainer) fullscreenContainer.remove(); // Remove fullscreen container
+
+        document.querySelector('.photo-grid').style.display = 'grid'; // Show the grid
+        document.querySelector('.name-overlay').style.visibility = 'visible'; // Show name overlay
+
+        // Add this line to restore visibility of the controls
+        document.querySelector('.grid-controls').style.display = 'flex'; // Show the controls again
+
         observeScrollTrigger(); // Re-setup scroll trigger
 
         // Scroll to the last viewed photo
