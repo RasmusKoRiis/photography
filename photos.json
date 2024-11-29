@@ -4,7 +4,7 @@
     "alt": "PALERMO, SICILY",
     "tags": "city",
     "description": [
-      "Shoot in Palermo, Sicily with a Canon AE-1 using Kodak-200 Gold.",
+      "Shoot in Palermo, Sicily with a Canon AE-1 using Kodak Gold-200.",
       "1. July 2023"
     ]
   },
@@ -36,59 +36,64 @@
     ]
   },
   {
-    "src": "images/R2-01477-025A.jpg",
-    "alt": "R2-01477-025A",
-    "tags": "face",
-    "description": [
-      "Description for R2-01477-025A"
-    ]
-  },
-  {
-    "src": "images/R1-02598-0014.jpg",
-    "alt": "R1-02598-0014",
+    "src": "images/SANDOYA.jpg",
+    "alt": "SANDØYA, NORWAY",
     "tags": "mountain",
     "description": [
-      "Description for R1-02598-0014"
+      "Shoot at Sandøya during northern lights with a Sony A7II.",
+      "10. November 2017"
     ]
   },
   {
-    "src": "images/R1-01451-0007.jpg",
-    "alt": "R1-01451-0007",
+    "src": "images/YUEN_01.jpg",
+    "alt": "YUEN JING",
     "tags": "face",
     "description": [
-      "Description for R1-01451-0007"
+      "Shoot with a Mamiya RZ67 using Kodak Portra-400"
     ]
   },
   {
-    "src": "images/R1-02018-035A.jpg",
-    "alt": "R1-02018-035A",
+    "src": "images/KLARA_01.jpg",
+    "alt": "KLARA",
+    "tags": "face",
+    "description": [
+      "Shoot with a Canon AE-1 using Kodak Gold-200",
+      "31. August 2023"
+    ]
+  },
+  {
+    "src": "images/TOKYO_01.jpg",
+    "alt": "TOKYO, JAPAN",
     "tags": "city",
     "description": [
-      "Description for R1-02018-035A"
+      "Shoot in Yoyogi Park during sakura season with a Mamiya RZ67 using Kodak Portra-400.",
+      "10. April 2024"
     ]
   },
   {
-    "src": "images/R1-01451-0006.jpg",
-    "alt": "R1-01451-0006",
-    "tags": "face mountain",
-    "description": [
-      "Description for R1-01451-0006"
-    ]
-  },
-  {
-    "src": "images/R1-05843-0032.jpg",
-    "alt": "R1-05843-0032",
+    "src": "images/KAWAGUCHIKO_01.jpg",
+    "alt": "KAWAGUCHIKO, JAPAN",
     "tags": "mountain",
     "description": [
-      "Description for R1-05843-0032"
+      "Shoot at Kawaguchiko with a Mamiya RZ67 using Kodak Portra-400.",
+      "31. March 2024"
     ]
   },
   {
-    "src": "images/R1-02598-0011.jpg",
-    "alt": "R1-02598-0011",
-    "tags": "city",
+    "src": "images/YUEN_02.jpg",
+    "alt": "YUEN JING",
+    "tags": "face",
     "description": [
-      "Description for R1-02598-0011"
+      "Shoot with a Mamiya RZ67 using Kodak Portra-400"
+    ]
+  },
+  {
+    "src": "images/TOKYO_02.jpg",
+    "alt": "TOKYO, JAPAN",
+    "tags": "mountain",
+    "description": [
+      "Shoot from SHibuya Sky with a Mamiya RZ67 using Cinestill-800.",
+      "11. April 2024"
     ]
   },
   {
