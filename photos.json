@@ -9,7 +9,7 @@
     ]
   },
   {
-    "src": "OSAKA_01.jpg",
+    "src": "images/OSAKA_01.jpg",
     "alt": "OSAKA, JAPAN",
     "tags": "city",
     "description": [
@@ -28,7 +28,7 @@
     ]
   },
   {
-    "src": "images/R1-06117-036A.jpg",
+    "src": "images/YUEN_04.jpg",
     "alt": "YUEN JING",
     "tags": "mountain",
     "description": [
@@ -114,11 +114,12 @@
     ]
   },
   {
-    "src": "images/R1-02598-0010.jpg",
-    "alt": "R1-02598-0010",
-    "tags": "face mountain",
+    "src": "images/OSLO_01.jpg",
+    "alt": "OSLO, NORWAY",
+    "tags": "city",
     "description": [
-      "Description for R1-02598-0010"
+      "Shoot in Oslo, Norway at the independent day with a Canon AE-1 using Kodak Gold-200.",
+      "17. May 2023"
     ]
   },
   {
