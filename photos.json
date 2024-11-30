@@ -1,6 +1,6 @@
 [
   {
-    "src": "images/R1-06622-027A.jpg",
+    "src": "images/PALERMO.jpg",
     "alt": "PALERMO, SICILY",
     "tags": "city",
     "description": [
@@ -9,21 +9,22 @@
     ]
   },
   {
-    "src": "images/R2-07436-0008-Enhanced.jpg",
+    "src": "OSAKA_01.jpg",
     "alt": "OSAKA, JAPAN",
     "tags": "city",
     "description": [
       "Shoot in Osaka, Japan with a Mamiya RZ67 using Cinestill-800",
+      "15. August 2022",
       ""
     ]
   },
   {
-    "src": "images/R1-01451-0011.jpg",
-    "alt": "TOKYO, JAPAN",
-    "tags": "city",
+    "src": "images/ISLE_OF_SKYE_01.jpg",
+    "alt": "ISLE OF SKYE, SCOTLAND",
+    "tags": "mountain",
     "description": [
-      "TOKYO, JAPAN - Mamiya RZ67",
-      "A journey through the iconic Shibuya Crossing and beyond."
+      "Shoot at Isle of Skye, Scotland with a Mamiya RZ67 using Kodak Gold-200.",
+      "15. August 2024"
     ]
   },
   {
@@ -31,8 +32,7 @@
     "alt": "YUEN JING",
     "tags": "mountain",
     "description": [
-      "YUEN JING - Canon AE-1",
-      "The tranquil beauty of traditional Chinese gardens."
+      "Shoot with a Canon AE-1 using Kodak Gold-200"
     ]
   },
   {
@@ -149,35 +149,39 @@
     ]
   },
   {
-    "src": "images/R1-02598-0007.jpg",
-    "alt": "R1-02598-0007",
+    "src": "images/EDINBURGH.jpg",
+    "alt": "EDINBURGH, SCOTLAND",
     "tags": "city",
     "description": [
-      "Description for R1-02598-0007"
+      "Shoot in Edinburgh, Scotland with a Mamiya RZ67 with Kodak Gold-200.",
+      "18. August 2024"
     ]
   },
   {
-    "src": "images/R2-07436-0005.jpg",
-    "alt": "R2-07436-0005",
-    "tags": "face mountain",
-    "description": [
-      "Description for R2-07436-0005"
-    ]
-  },
-  {
-    "src": "images/R1-00042-008A.jpg",
-    "alt": "R1-00042-008A",
-    "tags": "city",
-    "description": [
-      "Description for R1-00042-008A"
-    ]
-  },
-  {
-    "src": "images/R2-07436-0004.jpg",
-    "alt": "R2-07436-0004",
+    "src": "images/CLENCOE_01.jpg",
+    "alt": "CLEN COE, SCOTLAND",
     "tags": "mountain",
     "description": [
-      "Description for R2-07436-0004"
+      "Shoot in Clen Coe, Scotland with a Mamiya RZ67 with Kodak Gold-200.",
+      "14. August 2024"
+    ]
+  },
+  {
+    "src": "images/CLEN_COE_02.jpg",
+    "alt": "CLEN COE, SCOTLAND",
+    "tags": "mountain",
+    "description": [
+      "Shoot in Clen Coe, Scotland with a Mamiya RZ67 with Kodak Gold-200.",
+      "14. August 2024"
+    ]
+  },
+  {
+    "src": "images/CLEN_COE_03.jpg",
+    "alt": "CLEN COE, SCOTLAND",
+    "tags": "mountain",
+    "description": [
+      "Shoot in Clen Coe, Scotland with a Mamiya RZ67 with Kodak Gold-200.",
+      "14. August 2024"
     ]
   }
 ]
