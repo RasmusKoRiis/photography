@@ -1,30 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     let photosData = []; // Global array to store photo data from JSON
-    const body = document.body;
     const photoGrid = document.querySelector('.photo-grid');
+    let gridColumns = 3; // Default grid columns
     let lastViewedIndex = 0; // Store the index of the last viewed photo
-
-    // Lazy loading function
-    const lazyLoad = (entries, observer) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                const src = img.getAttribute('data-src'); // Get the actual image source
-                if (src) {
-                    img.src = src; // Load the image
-                    img.removeAttribute('data-src'); // Remove the placeholder
-                }
-                observer.unobserve(img); // Stop observing once loaded
-            }
-        });
-    };
-
-    // Set up an IntersectionObserver for lazy loading
-    const lazyObserver = new IntersectionObserver(lazyLoad, {
-        root: null,
-        rootMargin: "100px",
-        threshold: 0.1,
-    });
+    const photosPerBatch = 20; // Number of photos to load per batch
+    let loadedPhotoCount = 0; // Track how many photos have been loaded
 
     // Fetch photos from JSON
     const fetchPhotos = async () => {
@@ -32,67 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('photos.json'); // Path to JSON file
             photosData = await response.json(); // Store photo data
             initializeGrid(); // Populate the grid for the first time
-            observeScrollTrigger(); // Set up infinite scrolling
         } catch (error) {
             console.error("Error fetching photo data:", error);
         }
     };
 
-    let loadedPhotoCount = 0; // Track how many photos are loaded
-    const maxPhotosPerBatch = 10; // Limit the number of photos loaded per scroll event
-    let maxPhotosToLoad = 150;
-
-    const loadMorePhotos = () => {
-        const fragment = document.createDocumentFragment();
-        const currentPhotoCount = document.querySelectorAll('.photo-container').length;
-    
-        for (let i = loadedPhotoCount; i < loadedPhotoCount + maxPhotosPerBatch; i++) {
-            if (i >= photosData.length || i >= maxPhotosToLoad) {
-                console.log("No more photos to load."); // Debugging log
-                const trigger = document.querySelector('.scroll-trigger');
-                if (trigger) trigger.remove(); // Remove the trigger when done
-                break;
-            }
-    
-            const photo = photosData[i];
-            const container = document.createElement('div');
-            container.classList.add('photo-container');
-    
-            const img = document.createElement('img');
-            img.setAttribute('data-src', photo.src); // Lazy-load the image
-            img.alt = photo.alt;
-            img.classList.add('photo');
-    
-            lazyObserver.observe(img); // Lazy load observer
-    
-            const overlay = document.createElement('div');
-            overlay.classList.add('photo-hover-overlay');
-            overlay.innerText = photo.alt;
-    
-            container.appendChild(img);
-            container.appendChild(overlay);
-            fragment.appendChild(container);
-        }
-    
-        loadedPhotoCount += maxPhotosPerBatch; // Update the count of loaded photos
-        photoGrid.appendChild(fragment); // Append photos to the grid
-    
-        // Remove trigger if maxPhotosToLoad has been reached
-        if (loadedPhotoCount >= maxPhotosToLoad) {
-            console.log(`Reached max photos limit (${maxPhotosToLoad}).`);
-            const trigger = document.querySelector('.scroll-trigger');
-            if (trigger) trigger.remove(); // Remove the scroll trigger
-        }
-    };
-
     // Initialize the grid for the first time
     const initializeGrid = () => {
-        fillGrid(); // Fill the grid with the first batch of photos
-        rebindPhotoClickEvents(); // Bind click events for fullscreen functionality
-    };
-
-    // Fill the grid with photos
-    const fillGrid = () => {
         const fragment = document.createDocumentFragment();
 
         photosData.forEach((photo, index) => {
@@ -101,18 +27,17 @@ document.addEventListener('DOMContentLoaded', () => {
             // Create photo container
             const container = document.createElement('div');
             container.classList.add('photo-container');
+            container.setAttribute('data-id', index);
 
             // Create the photo element
             const img = document.createElement('img');
-            img.setAttribute('data-src', photo.src); // Lazy-load the image
+            img.src = photo.src; // Load the image immediately
             img.alt = photo.alt;
             img.classList.add('photo');
             img.addEventListener('error', () => {
                 console.error(`Failed to load image: ${photo.src}`);
                 container.remove(); // Remove the container if image fails to load
             });
-
-            lazyObserver.observe(img); // Observe for lazy loading
 
             // Create hover overlay
             const overlay = document.createElement('div');
@@ -127,13 +52,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Append the fragment to the photo grid
         photoGrid.appendChild(fragment);
+
+        // Bind click events for fullscreen functionality
+        rebindPhotoClickEvents();
     };
 
     // Rebind click events for all photos
     const rebindPhotoClickEvents = () => {
         const allPhotos = document.querySelectorAll('.photo');
-        allPhotos.forEach((photo, index) => {
-            photo.addEventListener('click', () => createFullscreenView(index % photosData.length));
+        allPhotos.forEach((photo) => {
+            photo.addEventListener('click', (event) => {
+                const container = event.target.closest('.photo-container');
+                const photoIndex = container.getAttribute('data-id'); // Fetch the correct index
+                if (photoIndex !== null) {
+                    createFullscreenView(parseInt(photoIndex, 10)); // Use the correct index
+                } else {
+                    console.error("Photo index not found!");
+                }
+            });
         });
     };
 
@@ -253,18 +189,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Ensure the photo grid is visible
         photoGrid.style.display = 'grid';
     
-        // Clear the grid and load a maximum of 12 photos
+        // Clear the grid and prepare for progressive loading
         photoGrid.innerHTML = ""; // Clear the grid content
+        loadedPhotoCount = 0; // Reset loaded photo count
+    
         const fragment = document.createDocumentFragment();
     
-        // Load up to 12 photos
-        const maxPhotosToShow = 12;
-        for (let i = 0; i < Math.min(maxPhotosToShow, photosData.length); i++) {
+        // Load an initial batch of photos (e.g., first 20)
+        const start = loadedPhotoCount;
+        const end = Math.min(loadedPhotoCount + photosPerBatch, photosData.length);
+    
+        for (let i = start; i < end; i++) {
             const photo = photosData[i];
+    
+            if (!photo.src) return; // Skip if photo data is incomplete
     
             // Create photo container
             const container = document.createElement('div');
             container.classList.add('photo-container');
+            container.setAttribute('data-id', i); // Attach data-id for correct indexing
     
             // Create the photo element
             const img = document.createElement('img');
@@ -281,84 +224,52 @@ document.addEventListener('DOMContentLoaded', () => {
             fragment.appendChild(container);
         }
     
-        // Append the fragment to the photo grid
+        loadedPhotoCount = end; // Update the count of loaded photos
+    
+        // Append the initial batch to the photo grid
         photoGrid.appendChild(fragment);
     
-        // Rebind click events for fullscreen
+        // Rebind click events for fullscreen functionality
         rebindPhotoClickEvents();
     
-        // Reinitialize the scroll trigger
+        // Set up infinite scrolling for additional photos
         observeScrollTrigger();
     };
 
-    // Infinite scrolling: Observe when to load more photos
-    const observeScrollTrigger = () => {
-        const trigger = document.createElement('div');
-        trigger.classList.add('scroll-trigger');
-        photoGrid.appendChild(trigger);
-
-        const scrollObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    fillGrid(); // Add more photos to the grid
-                    rebindPhotoClickEvents(); // Rebind click events for new photos
-                }
-            });
-        }, { root: null, rootMargin: "100px", threshold: 0 });
-
-        scrollObserver.observe(trigger);
-    };
-
-    // Ensure the mailto link is clickable
-    document.querySelector('.name-link').addEventListener('click', (e) => {
-        console.log('Name clicked!');
-    });
-
-    // Default grid columns
-    let gridColumns = 3;
-
-    // Add event listeners for the + and - buttons
-    document.getElementById('increase-grid').addEventListener('click', () => {
-        gridColumns = 3; // Set to 3 columns
-        updateGridColumns();
-    });
-
-    document.getElementById('decrease-grid').addEventListener('click', () => {
-        gridColumns = 5; // Set to 5 columns
-        updateGridColumns();
-    });
-
-    // Function to update the grid style dynamically
+    // Update grid columns dynamically
     const updateGridColumns = () => {
         document.querySelector('.photo-grid').style.gridTemplateColumns = `repeat(${gridColumns}, 1fr)`;
     };
 
-    // Preload images to ensure all are loaded before shuffling
-    const preloadImages = () => {
-        document.querySelectorAll('.photo-container img').forEach(img => {
-            if (img.dataset.src) {
-                img.src = img.dataset.src; // Load the image
-                img.removeAttribute('data-src'); // Remove lazy-loading marker
-            }
-        });
-    };
+    // Add event listeners for the + and - buttons
+    document.getElementById('increase-grid').addEventListener('click', () => {
+        gridColumns = Math.max(1, gridColumns - 1); // Decrease columns (increase grid size)
+        updateGridColumns();
+    });
 
+    document.getElementById('decrease-grid').addEventListener('click', () => {
+        gridColumns += 1; // Increase columns (reduce grid size)
+        updateGridColumns();
+    });
+
+    // Shuffle the photo grid
     const shuffleGrid = () => {
-        const photoGrid = document.querySelector('.photo-grid');
         const photoContainers = Array.from(photoGrid.querySelectorAll('.photo-container'));
 
         // Shuffle the array of photo containers
         const shuffled = photoContainers.sort(() => Math.random() - 0.5);
 
-        // Clear and re-append photo containers in shuffled order with fixed indices
+        // Clear and re-append photo containers in shuffled order
         photoGrid.innerHTML = ""; // Clear the grid
         shuffled.forEach(container => {
             photoGrid.appendChild(container);
         });
+
+        rebindPhotoClickEvents(); // Rebind events after shuffle
     };
 
+    // Force grid reflow for better rendering
     const forceGridReflow = () => {
-        const photoGrid = document.querySelector('.photo-grid');
         photoGrid.style.display = 'none'; // Hide grid
         requestAnimationFrame(() => {
             photoGrid.style.display = 'grid'; // Redisplay grid
@@ -371,6 +282,70 @@ document.addEventListener('DOMContentLoaded', () => {
         forceGridReflow();
     });
 
+    const loadMorePhotos = () => {
+        const fragment = document.createDocumentFragment();
+    
+        const start = loadedPhotoCount;
+        const end = Math.min(loadedPhotoCount + photosPerBatch, photosData.length);
+    
+        for (let i = start; i < end; i++) {
+            const photo = photosData[i];
+    
+            // Create photo container
+            const container = document.createElement('div');
+            container.classList.add('photo-container');
+            container.setAttribute('data-id', i); // Attach data-id for correct indexing
+    
+            // Create the photo element
+            const img = document.createElement('img');
+            img.setAttribute('src', photo.src); // Load the image immediately
+            img.alt = photo.alt;
+            img.classList.add('photo');
+    
+            const overlay = document.createElement('div');
+            overlay.classList.add('photo-hover-overlay');
+            overlay.innerText = photo.alt;
+    
+            container.appendChild(img);
+            container.appendChild(overlay);
+            fragment.appendChild(container);
+        }
+    
+        loadedPhotoCount = end; // Update the count of loaded photos
+        photoGrid.appendChild(fragment); // Append the batch to the grid
+    
+        rebindPhotoClickEvents(); // Bind click events for newly added photos
+    
+        // If all photos are loaded, remove the scroll trigger
+        if (loadedPhotoCount >= photosData.length) {
+            const trigger = document.querySelector('.scroll-trigger');
+            if (trigger) trigger.remove();
+        }
+    };
+
+    const observeScrollTrigger = () => {
+        const trigger = document.createElement('div');
+        trigger.classList.add('scroll-trigger');
+        photoGrid.appendChild(trigger);
+    
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    loadMorePhotos(); // Add more photos to the grid
+                }
+            });
+        }, { root: null, rootMargin: "100px", threshold: 0 });
+    
+        scrollObserver.observe(trigger);
+    };
+
     // Fetch photos and initialize the grid
-    fetchPhotos();
+    fetchPhotos().then(() => {
+        // Use progressive loading by default
+        loadMorePhotos();
+        observeScrollTrigger();
+    
+        // If you want to load all photos at once, you can call initializeGrid instead:
+        // initializeGrid();
+    });
 });
