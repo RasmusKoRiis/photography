@@ -253,3 +253,10 @@ body {
     background: transparent;
     margin-top: 10px; /* Ensure spacing at the bottom */
 }
+
+/* Responsive design for phones */
+@media (max-width: 600px) {
+    .photo-grid {
+      grid-template-columns: 1fr; /* One column per row */
+    }
+  }
