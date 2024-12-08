@@ -19,6 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize the grid for the first time
     const initializeGrid = () => {
+
+        // Sort photosData by id in descending order
+        photosData.sort((a, b) => b.id - a.id);
+        
         const fragment = document.createDocumentFragment();
 
         photosData.forEach((photo, index) => {

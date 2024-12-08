@@ -1,6 +1,7 @@
 [
   {
     "src": "images/PALERMO.jpg",
+    "id": 1,
     "alt": "PALERMO, SICILY",
     "tags": "city",
     "description": [
@@ -10,6 +11,7 @@
   },
   {
     "src": "images/OSAKA_01.jpg",
+    "id": 2,
     "alt": "OSAKA, JAPAN",
     "tags": "city",
     "description": [
@@ -20,6 +22,7 @@
   },
   {
     "src": "images/ISLE_OF_SKYE_01.jpg",
+    "id": 3,
     "alt": "ISLE OF SKYE, SCOTLAND",
     "tags": "mountain",
     "description": [
@@ -29,6 +32,7 @@
   },
   {
     "src": "images/YUEN_04.jpg",
+    "id": 4,
     "alt": "YUEN JING",
     "tags": "mountain",
     "description": [
@@ -37,6 +41,7 @@
   },
   {
     "src": "images/SANDOYA.jpg",
+    "id": 5,
     "alt": "SANDØYA, NORWAY",
     "tags": "mountain",
     "description": [
@@ -46,6 +51,7 @@
   },
   {
     "src": "images/YUEN_01.jpg",
+    "id": 6,
     "alt": "YUEN JING",
     "tags": "face",
     "description": [
@@ -54,6 +60,7 @@
   },
   {
     "src": "images/KLARA_01.jpg",
+    "id": 7,
     "alt": "KLARA",
     "tags": "face",
     "description": [
@@ -63,6 +70,7 @@
   },
   {
     "src": "images/TOKYO_01.jpg",
+    "id": 8,
     "alt": "TOKYO, JAPAN",
     "tags": "city",
     "description": [
@@ -72,6 +80,7 @@
   },
   {
     "src": "images/KAWAGUCHIKO_01.jpg",
+    "id": 9,
     "alt": "KAWAGUCHIKO, JAPAN",
     "tags": "mountain",
     "description": [
@@ -81,6 +90,7 @@
   },
   {
     "src": "images/YUEN_02.jpg",
+    "id": 10,
     "alt": "YUEN JING",
     "tags": "face",
     "description": [
@@ -89,6 +99,7 @@
   },
   {
     "src": "images/TOKYO_02.jpg",
+    "id": 11,
     "alt": "TOKYO, JAPAN",
     "tags": "mountain",
     "description": [
@@ -98,6 +109,7 @@
   },
   {
     "src": "images/TOKYO_03.jpg",
+    "id": 12,
     "alt": "TOKYO, JAPAN",
     "tags": "city",
     "description": [
@@ -107,6 +119,7 @@
   },
   {
     "src": "images/YUEN_03.jpg",
+    "id": 13,
     "alt": "YUEN JING",
     "tags": "face",
     "description": [
@@ -115,6 +128,7 @@
   },
   {
     "src": "images/OSLO_01.jpg",
+    "id": 14,
     "alt": "OSLO, NORWAY",
     "tags": "city",
     "description": [
@@ -124,6 +138,7 @@
   },
   {
     "src": "images/FIRENZE_01.jpg",
+    "id": 15,
     "alt": "FIRENZE, ITALY",
     "tags": "city",
     "description": [
@@ -133,6 +148,7 @@
   },
   {
     "src": "images/FIRENZE_02.jpg",
+    "id": 16,
     "alt": "FIRENZE, ITALY",
     "tags": "city",
     "description": [
@@ -142,6 +158,7 @@
   },
   {
     "src": "images/KLARA_02.jpg",
+    "id": 17,
     "alt": "KLARA",
     "tags": "face",
     "description": [
@@ -151,6 +168,7 @@
   },
   {
     "src": "images/EDINBURGH.jpg",
+    "id": 18,
     "alt": "EDINBURGH, SCOTLAND",
     "tags": "city",
     "description": [
@@ -160,6 +178,7 @@
   },
   {
     "src": "images/CLENCOE_01.jpg",
+    "id": 19,
     "alt": "CLEN COE, SCOTLAND",
     "tags": "mountain",
     "description": [
@@ -169,6 +188,7 @@
   },
   {
     "src": "images/CLEN_COE_02.jpg",
+    "id": 20,
     "alt": "CLEN COE, SCOTLAND",
     "tags": "mountain",
     "description": [
@@ -178,6 +198,7 @@
   },
   {
     "src": "images/CLEN_COE_03.jpg",
+    "id": 21,
     "alt": "CLEN COE, SCOTLAND",
     "tags": "mountain",
     "description": [
